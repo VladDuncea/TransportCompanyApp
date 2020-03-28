@@ -8,7 +8,7 @@ Class to model persons(used for drivers and clients).
 2. Driver  
 *Extends **Person***  
 Class to model the drivers of the company.  
-3. Client
+3. Client  
 *Extends **Person***  
 Class to model the clients.  
 4. Car  
