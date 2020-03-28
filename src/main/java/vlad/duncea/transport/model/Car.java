@@ -4,10 +4,12 @@ public class Car
 {
     private String registration_nr;
     private float volume;
+    private Route route;
 
-    public Car(String registration_nr, float volume) {
+    public Car(String registration_nr, float volume, Route route) {
         this.registration_nr = registration_nr;
         this.volume = volume;
+        this.route = route;
     }
 
     public String getRegistration_nr() {
@@ -24,5 +26,13 @@ public class Car
 
     public void setVolume(float volume) {
         this.volume = volume;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }

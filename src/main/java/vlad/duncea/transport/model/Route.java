@@ -36,4 +36,12 @@ public class Route
     public void setTo(City to) {
         this.to = to;
     }
+
+    @Override
+    public String toString() {
+        return "Route " +
+                "links:" + links +
+                " from: " + from +
+                " to: " + to;
+    }
 }

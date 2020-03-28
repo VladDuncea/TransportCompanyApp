@@ -4,14 +4,14 @@ public class Package
 {
     private float volume, weight;
     private City from,to;
-    private Client client;
+    private Client owner;
 
-    public Package(float volume, float weight, City from, City to, Client client) {
+    public Package(float volume, float weight, City from, City to, Client owner) {
         this.volume = volume;
         this.weight = weight;
         this.from = from;
         this.to = to;
-        this.client = client;
+        this.owner = owner;
     }
 
     public float getVolume() {
@@ -46,11 +46,21 @@ public class Package
         this.to = to;
     }
 
-    public Client getClient() {
-        return client;
+    public Client getOwner() {
+        return owner;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setOwner(Client client) {
+        this.owner = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Package" +
+                " volume: " + volume +
+                " weight:" + weight +
+                " from:" + from +
+                " to:" + to +
+                " owner:" + owner;
     }
 }

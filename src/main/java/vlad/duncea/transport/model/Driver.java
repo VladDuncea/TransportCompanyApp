@@ -26,4 +26,11 @@ public class Driver extends Person
     public void setSalary(float salary) {
         this.salary = salary;
     }
+
+    @Override
+    public String toString() {
+        return "Driver " + super.toString() +
+                " car: " + car +
+                "salary: " + salary;
+    }
 }

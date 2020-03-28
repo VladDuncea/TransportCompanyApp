@@ -43,4 +43,13 @@ public class Link
     public void setDuration(float duration) {
         this.duration = duration;
     }
+
+    @Override
+    public String toString() {
+        return "Link " +
+                "city1: " + city1 +
+                " city2: " + city2 +
+                " length: " + length +
+                " duration: " + duration;
+    }
 }

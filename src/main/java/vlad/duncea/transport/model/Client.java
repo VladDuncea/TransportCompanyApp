@@ -7,6 +7,8 @@ public class Client extends Person
         super(firstName, lastName, phoneNumber);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Client " + super.toString();
+    }
 }
