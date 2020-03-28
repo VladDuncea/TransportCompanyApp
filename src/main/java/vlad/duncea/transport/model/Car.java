@@ -35,4 +35,11 @@ public class Car
     public void setRoute(Route route) {
         this.route = route;
     }
+
+    @Override
+    public String toString() {
+        return "Car: "+ registration_nr +
+                " Volume: " + volume +
+                " Route: " + (route == null ? "No route" : route.toString());
+    }
 }
