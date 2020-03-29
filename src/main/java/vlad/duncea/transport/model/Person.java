@@ -2,12 +2,22 @@ package vlad.duncea.transport.model;
 
 public abstract class Person
 {
+    private int id;
     private String firstName,lastName,phoneNumber;
 
-    public Person(String firstName, String lastName, String phoneNumber) {
+    public Person(int id,String firstName, String lastName, String phoneNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -36,7 +46,7 @@ public abstract class Person
 
     @Override
     public String toString() {
-        return "First Name: " + firstName +
+        return "ID: " + id + " First Name: " + firstName +
                 " Last Name: " + lastName +
                 " Phone Number: " + phoneNumber;
     }

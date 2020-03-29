@@ -34,4 +34,24 @@ Class that describes a package.
 A package has volume,weight and is owned by a *client*.  
  
 ### Interactions
---COMING SOON™--
+1. DriverService
+    - Add/remove drivers
+    - Get driver by ID
+    - Get drivers by car
+    - Set a drivers car
+    - Show all drivers  
+
+2. ClientService
+    - Add/remove clients
+    - Show all clients
+
+3. Car
+    - Add/remove cars
+    - Get car by registration number
+    - Show all cars
+    
+4. City
+    - Add/remove cities
+    - Show all cities
+
+**Most interactions are available through a interactive console menu**

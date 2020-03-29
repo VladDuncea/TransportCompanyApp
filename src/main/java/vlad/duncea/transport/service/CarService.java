@@ -31,6 +31,24 @@ public class CarService
         return c;
     }
 
+    public void removeCar(Scanner s)
+    {
+        System.out.println("Enter registratio nr:");
+        if(carRepository.removeCar(s.next()))
+            System.out.println("Car removed successfully!");
+        else
+            System.out.println("Car has drivers assigned to it, first remove those drivers!");
+    }
+
+    public Car getCarByReg(String regNr)
+    {
+        for(Car c : carRepository.getCars()) {
+            if(c.getRegistration_nr().equals(regNr))
+                return c;
+        }
+        return null;
+    }
+
     public String allCars()
     {
         StringBuilder res = new StringBuilder();

@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 public class DriverRepository
 {
-    ArrayList<Driver> drivers;
+    private int lastId;
+    private ArrayList<Driver> drivers;
 
     public DriverRepository()
     {
         drivers = new ArrayList<>();
+        lastId =0;
     }
 
     public DriverRepository(ArrayList<Driver> drivers) {
@@ -20,11 +22,26 @@ public class DriverRepository
     public void addDriver(Driver d)
     {
         drivers.add(d);
+        lastId +=1;
+    }
+
+    public int getLastId()
+    {
+        return lastId;
     }
 
     public void removeDriver(Driver d)
     {
         drivers.remove(d);
+    }
+    public void removeDriverById(int id)
+    {
+        for(Driver d : drivers)
+            if(d.getId() == id)
+            {
+                drivers.remove(d);
+                break;
+            }
     }
 
     public ArrayList<Driver> getDrivers() {

@@ -5,8 +5,8 @@ public class Driver extends Person
     private Car car;
     private float salary;
 
-    public Driver(String firstName, String lastName, String phoneNumber, Car car, float salary) {
-        super(firstName, lastName, phoneNumber);
+    public Driver(int id, String firstName, String lastName, String phoneNumber, Car car, float salary) {
+        super(id, firstName, lastName, phoneNumber);
         this.car = car;
         this.salary = salary;
     }
@@ -30,7 +30,7 @@ public class Driver extends Person
     @Override
     public String toString() {
         return "Driver " + super.toString() +
-                " car: " + car +
-                "salary: " + salary;
+                " car: " + (car !=null ? car.getRegistration_nr() : "No car assigned") +
+                " salary: " + salary;
     }
 }

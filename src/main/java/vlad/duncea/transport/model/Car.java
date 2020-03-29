@@ -7,6 +7,8 @@ public class Car
     private Route route;
 
     public Car(String registration_nr, float volume, Route route) {
+        if(registration_nr == null)
+            throw new NullPointerException();
         this.registration_nr = registration_nr;
         this.volume = volume;
         this.route = route;
@@ -41,5 +43,15 @@ public class Car
         return "Car: "+ registration_nr +
                 " Volume: " + volume +
                 " Route: " + (route == null ? "No route" : route.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+
+        return registration_nr.equals(car.registration_nr);
     }
 }

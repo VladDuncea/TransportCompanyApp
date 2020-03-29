@@ -3,10 +3,10 @@ package vlad.duncea.transport.model;
 public class City
 {
     private String name;
-    private String longitude;
-    private String latitude;
+    private float longitude;
+    private float latitude;
 
-    public City(String name, String longitude, String latitude) {
+    public City(String name, float longitude, float latitude) {
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -20,19 +20,19 @@ public class City
         this.name = name;
     }
 
-    public String getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
 
