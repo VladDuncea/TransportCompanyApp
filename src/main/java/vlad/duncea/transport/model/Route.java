@@ -1,13 +1,14 @@
 package vlad.duncea.transport.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Route
 {
-    private List<Link> links;
+    private ArrayList<Link> links;
     private City from,to;
 
-    public Route(List<Link> links, City from, City to) {
+    public Route(ArrayList<Link> links, City from, City to) {
         this.links = links;
         this.from = from;
         this.to = to;
@@ -17,7 +18,7 @@ public class Route
         return links;
     }
 
-    public void setLinks(List<Link> links) {
+    public void setLinks(ArrayList<Link> links) {
         this.links = links;
     }
 
@@ -39,8 +40,11 @@ public class Route
 
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Link l :links)
+            sb.append(l).append("\n");
         return "Route " +
-                "links:" + links +
+                "links:" + sb.toString() +
                 " from: " + from +
                 " to: " + to;
     }

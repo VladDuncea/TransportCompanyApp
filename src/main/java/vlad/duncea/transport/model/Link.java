@@ -2,10 +2,12 @@ package vlad.duncea.transport.model;
 
 public class Link
 {
+    private int linkId;
     private City city1,city2;
     private float length, duration;
 
-    public Link(City city1, City city2, float length, float duration) {
+    public Link(int linkId, City city1, City city2, float length, float duration) {
+        this.linkId = linkId;
         this.city1 = city1;
         this.city2 = city2;
         this.length = length;
@@ -44,11 +46,20 @@ public class Link
         this.duration = duration;
     }
 
+    public int getLinkId() {
+        return linkId;
+    }
+
+    public boolean linksCities(City c1,City c2)
+    {
+        return (city1.equals(c1) && city2.equals(c2)) || (city1.equals(c2) && city2.equals(c1));
+    }
+
     @Override
     public String toString() {
-        return "Link " +
-                "city1: " + city1 +
-                " city2: " + city2 +
+        return "Link " + "ID: " + linkId +
+                " city1: " + city1.getName() +
+                " city2: " + city2.getName() +
                 " length: " + length +
                 " duration: " + duration;
     }

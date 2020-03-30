@@ -20,6 +20,10 @@ public class CityService
         System.out.println("Enter city name: ");
         String name = s.next();
 
+        //add city only if the name is unique
+        if(getCityByName(name)!=null)
+            return null;
+
         System.out.println("Enter city longitude: ");
         float longitude = s.nextFloat();
 
@@ -36,6 +40,16 @@ public class CityService
     {
         System.out.println("Enter city name: ");
         cityRepository.removeCity(s.next());
+    }
+
+    public City getCityByName(String name)
+    {
+        for(City c : cityRepository.getCities())
+        {
+            if(c.getName().equals(name))
+                return c;
+        }
+        return null;
     }
 
     public String allCities()

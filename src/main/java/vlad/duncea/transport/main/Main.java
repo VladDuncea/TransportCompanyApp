@@ -4,10 +4,7 @@ import com.sun.source.tree.WhileLoopTree;
 import vlad.duncea.transport.model.Car;
 import vlad.duncea.transport.model.City;
 import vlad.duncea.transport.model.Driver;
-import vlad.duncea.transport.service.CarService;
-import vlad.duncea.transport.service.CityService;
-import vlad.duncea.transport.service.ClientService;
-import vlad.duncea.transport.service.DriverService;
+import vlad.duncea.transport.service.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,6 +15,7 @@ public class Main
     public static ClientService clientService;
     public static CityService cityService;
     public static DriverService driverService;
+    public static LinkService linkService;
 
     public static void menuLoop()
     {
@@ -37,12 +35,13 @@ public class Main
                 System.out.println("2-Cities");
                 System.out.println("3-Clients");
                 System.out.println("4-Drivers");
+                System.out.println("5-Links");
                 System.out.println("0-Exit");
 
                 //Read input
                 menuLocation = scanner.nextInt();
 
-                if(menuLocation == 9)
+                if(menuLocation == 0)
                 {
                     return;
                 }
@@ -69,10 +68,10 @@ public class Main
                 {
                     System.out.println(carService.allCars());
                 }
-                else if(input == 9)
+                else if(input == 0)
                     menuLocation = 0;
             }
-            else if(menuLocation == 2)      //Clients
+            else if(menuLocation == 2)      //City
             {
                 System.out.println("--City Menu--");
                 System.out.println("1-Add City");
@@ -94,7 +93,7 @@ public class Main
                 {
                     System.out.println(cityService.allCities());
                 }
-                else if(input == 9)
+                else if(input == 0)
                     menuLocation = 0;
             }
             else if(menuLocation == 3)      //Clients
@@ -175,7 +174,49 @@ public class Main
                 else if(input == 0)
                     menuLocation = 0;
             }
+            else if(menuLocation == 5)      //Links
+            {
+                System.out.println("--Links Menu--");
+                System.out.println("1-Add Link");
+                System.out.println("2-Remove Link");
+                System.out.println("3-Shortest link between two cities");
+                System.out.println("5-See all links");
+                System.out.println("0-Back");
+
+                input = scanner.nextInt();
+
+                if(input == 1)
+                {
+                    linkService.addLink(scanner);
+                }
+                else if(input == 2)
+                {
+                    linkService.addLink(scanner);
+                }
+                else if(input == 3)
+                {
+                    System.out.println("Enter first city name: ");
+                    City c1 = cityService.getCityByName(scanner.next());
+
+                    System.out.println("Enter first city name: ");
+                    City c2 = cityService.getCityByName(scanner.next());
+
+                    System.out.println("1-By distance\n2-By time");
+                    int n = scanner.nextInt();
+
+                    System.out.println(linkService.getShortestLink(c1,c2,n==2));
+
+                }
+                else if (input == 5)
+                {
+                    System.out.println(linkService.allLinks());
+                }
+                else if(input == 0)
+                    menuLocation = 0;
+            }
         }
+
+        //TODO: save data on clean exit
     }
 
     public static void main(String[] args)
@@ -184,6 +225,7 @@ public class Main
         clientService = new ClientService();
         cityService = new CityService();
         driverService = new DriverService();
+        linkService = new LinkService();
         menuLoop();
     }
 

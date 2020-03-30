@@ -45,13 +45,18 @@ A package has volume,weight and is owned by a *client*.
     - Add/remove clients
     - Show all clients
 
-3. Car
+3. CarService
     - Add/remove cars
     - Get car by registration number
     - Show all cars
     
-4. City
+4. CityService
     - Add/remove cities
     - Show all cities
 
+5. LinkService  
+    - Add/remove links  
+    - Get shortest link between two cities(time or distance)
+    - Show all links
+      
 **Most interactions are available through a interactive console menu**
