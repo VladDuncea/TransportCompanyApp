@@ -4,6 +4,7 @@ import vlad.duncea.transport.model.Car;
 import vlad.duncea.transport.model.Client;
 import vlad.duncea.transport.repository.ClientRepository;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientService
@@ -37,6 +38,13 @@ public class ClientService
         System.out.println("Enter client ID: ");
         clientRepository.removeClient(s.nextInt());
     }
+
+    public Client getClientById(int id)
+    {
+        return clientRepository.getClientById(id);
+    }
+
+
 
     public String allClients()
     {

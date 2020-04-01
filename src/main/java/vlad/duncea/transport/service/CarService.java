@@ -43,7 +43,7 @@ public class CarService
     public Car getCarByReg(String regNr)
     {
         for(Car c : carRepository.getCars()) {
-            if(c.getRegistration_nr().equals(regNr))
+            if(c.getRegistrationNr().equals(regNr))
                 return c;
         }
         return null;

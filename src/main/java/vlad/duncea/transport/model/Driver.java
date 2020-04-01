@@ -30,7 +30,7 @@ public class Driver extends Person
     @Override
     public String toString() {
         return "Driver " + super.toString() +
-                " car: " + (car !=null ? car.getRegistration_nr() : "No car assigned") +
+                " car: " + (car !=null ? car.getRegistrationNr() : "No car assigned") +
                 " salary: " + salary;
     }
 }

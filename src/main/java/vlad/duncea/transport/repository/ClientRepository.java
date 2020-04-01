@@ -38,6 +38,16 @@ public class ClientRepository
             }
     }
 
+    public Client getClientById(int id)
+    {
+        for(Client c: clients)
+            if(c.getId() == id)
+            {
+                return c;
+            }
+        return null;
+    }
+
     public ArrayList<Client> getClients() {
         return clients;
     }

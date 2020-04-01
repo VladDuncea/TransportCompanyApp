@@ -1,12 +1,13 @@
 package vlad.duncea.transport.main;
 
 import com.sun.source.tree.WhileLoopTree;
-import vlad.duncea.transport.model.Car;
-import vlad.duncea.transport.model.City;
-import vlad.duncea.transport.model.Driver;
+import vlad.duncea.transport.model.*;
+import vlad.duncea.transport.model.Package;
 import vlad.duncea.transport.service.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main
@@ -16,6 +17,8 @@ public class Main
     public static CityService cityService;
     public static DriverService driverService;
     public static LinkService linkService;
+    public static PackageService packageService;
+    public static TransportService transportService;
 
     public static void menuLoop()
     {
@@ -36,6 +39,8 @@ public class Main
                 System.out.println("3-Clients");
                 System.out.println("4-Drivers");
                 System.out.println("5-Links");
+                System.out.println("6-Packages");
+                System.out.println("8-Transports");
                 System.out.println("0-Exit");
 
                 //Read input
@@ -191,7 +196,8 @@ public class Main
                 }
                 else if(input == 2)
                 {
-                    linkService.addLink(scanner);
+                    System.out.println("Enter link id: ");
+                    linkService.removeLinkById(scanner.nextInt());
                 }
                 else if(input == 3)
                 {
@@ -214,6 +220,93 @@ public class Main
                 else if(input == 0)
                     menuLocation = 0;
             }
+            else if(menuLocation == 6)      //Packages
+            {
+                System.out.println("--Packages Menu--");
+                System.out.println("1-Add Package");
+                //System.out.println("2-Remove Package");
+                System.out.println("3-See packages for client");
+                //System.out.println("5-See all Packages");
+                System.out.println("0-Back");
+
+                input = scanner.nextInt();
+
+                if(input == 1)
+                {
+                    packageService.addPackage(scanner);
+                }
+                else if(input == 2)
+                {
+                    //packageService.removePackageById(scanner);
+                }
+                else if(input == 3)
+                {
+                    System.out.println("Enter client id: ");
+                    Client c = clientService.getClientById(scanner.nextInt());
+
+                    ArrayList<vlad.duncea.transport.model.Package> packages = packageService.getPackagesForClient(c);
+                    if(packages.isEmpty())
+                        System.out.println("No packages");
+                    else
+                    {
+                        for(Package p : packages)
+                            System.out.println(p);
+                    }
+                }
+                else if (input == 5)
+                {
+                    //System.out.println(packageService.allPackages());
+                }
+                else if(input == 0)
+                    menuLocation = 0;
+            }
+            else if(menuLocation == 6)      //Transports
+            {
+                System.out.println("--Transports Menu--");
+                System.out.println("1-Add Transport");
+                System.out.println("2-Remove Transport");
+                System.out.println("3-See transports for date");
+                System.out.println("5-See all Transports");
+                System.out.println("0-Back");
+
+                input = scanner.nextInt();
+
+                if(input == 1)
+                {
+                    transportService.addTransport();
+                }
+                else if(input == 2)
+                {
+                    System.out.println("Enter transport ID: ");
+                    transportService.removeTransportByID(scanner.nextInt());
+                }
+                else if(input == 3)
+                {
+                    System.out.println("Enter date: ");
+                    try{
+                        Date d = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.next());
+
+
+                        ArrayList<Transport> transports = transportService.getTransportsByDate(d);
+                        if(transports.isEmpty())
+                            System.out.println("No transports");
+                        else
+                        {
+                            for(Transport t : transports)
+                                System.out.println(t);
+                        }
+                    }
+                    catch (Exception e) {
+                        System.out.println("Wrong date input");
+                    }
+                }
+                else if (input == 5)
+                {
+                    System.out.println(transportService.allTransports());
+                }
+                else if(input == 0)
+                    menuLocation = 0;
+            }
         }
 
         //TODO: save data on clean exit
@@ -226,6 +319,8 @@ public class Main
         cityService = new CityService();
         driverService = new DriverService();
         linkService = new LinkService();
+        packageService = new PackageService();
+        transportService = new TransportService();
         menuLoop();
     }
 

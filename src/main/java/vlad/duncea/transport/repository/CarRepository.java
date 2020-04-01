@@ -2,20 +2,20 @@ package vlad.duncea.transport.repository;
 
 import vlad.duncea.transport.main.Main;
 import vlad.duncea.transport.model.Car;
-import vlad.duncea.transport.model.Driver;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class CarRepository
 {
-    private ArrayList<Car> cars;
+    private TreeSet<Car> cars;
 
     public CarRepository() {
-        cars = new ArrayList<>();
+        cars = new TreeSet<>();
     }
 
     public CarRepository(ArrayList<Car> cars) {
-        this.cars = new ArrayList<>(cars);
+        this.cars = new TreeSet<>(cars);
     }
 
     public void addCar(Car c)
@@ -31,7 +31,7 @@ public class CarRepository
     {
         Car toDel = null;
         for(Car c : cars)
-            if (re.equals(c.getRegistration_nr()))
+            if (re.equals(c.getRegistrationNr()))
             {
                 toDel = c;
                 break;
@@ -49,6 +49,6 @@ public class CarRepository
     }
 
     public ArrayList<Car> getCars() {
-        return cars;
+        return new ArrayList<>(cars);
     }
 }

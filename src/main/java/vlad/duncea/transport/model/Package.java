@@ -2,16 +2,22 @@ package vlad.duncea.transport.model;
 
 public class Package
 {
+    private int packageID;
     private float volume, weight;
     private City from,to;
     private Client owner;
 
-    public Package(float volume, float weight, City from, City to, Client owner) {
+    public Package(int packageID, float volume, float weight, City from, City to, Client owner) {
+        this.packageID = packageID;
         this.volume = volume;
         this.weight = weight;
         this.from = from;
         this.to = to;
         this.owner = owner;
+    }
+
+    public int getPackageID() {
+        return packageID;
     }
 
     public float getVolume() {
@@ -56,11 +62,11 @@ public class Package
 
     @Override
     public String toString() {
-        return "Package" +
+        return  "Package" +
                 " volume: " + volume +
                 " weight:" + weight +
-                " from:" + from +
-                " to:" + to +
-                " owner:" + owner;
+                " from:" + from.getName() +
+                " to:" + to.getName() +
+                " owner ID:" + owner.getId();
     }
 }

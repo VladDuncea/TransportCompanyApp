@@ -1,25 +1,25 @@
 package vlad.duncea.transport.model;
 
-public class Car
+public class Car implements Comparable
 {
-    private String registration_nr;
+    private String registrationNr;
     private float volume;
     private Route route;
 
     public Car(String registration_nr, float volume, Route route) {
         if(registration_nr == null)
             throw new NullPointerException();
-        this.registration_nr = registration_nr;
+        this.registrationNr = registration_nr;
         this.volume = volume;
         this.route = route;
     }
 
-    public String getRegistration_nr() {
-        return registration_nr;
+    public String getRegistrationNr() {
+        return registrationNr;
     }
 
-    public void setRegistration_nr(String registration_nr) {
-        this.registration_nr = registration_nr;
+    public void setRegistrationNr(String registrationNr) {
+        this.registrationNr = registrationNr;
     }
 
     public float getVolume() {
@@ -40,7 +40,7 @@ public class Car
 
     @Override
     public String toString() {
-        return "Car: "+ registration_nr +
+        return "Car: "+ registrationNr +
                 " Volume: " + volume +
                 " Route: " + (route == null ? "No route" : route.toString());
     }
@@ -52,6 +52,12 @@ public class Car
 
         Car car = (Car) o;
 
-        return registration_nr.equals(car.registration_nr);
+        return registrationNr.equals(car.registrationNr);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Car c = (Car) o;
+        return registrationNr.compareTo(c.registrationNr);
     }
 }

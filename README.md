@@ -41,22 +41,31 @@ A package has volume,weight and is owned by a *client*.
     - Set a drivers car
     - Show all drivers  
 
-2. ClientService
+1. ClientService
     - Add/remove clients
     - Show all clients
 
-3. CarService
+1. CarService
     - Add/remove cars
     - Get car by registration number
-    - Show all cars
+    - Show all cars (Ordered by RegNr)
     
-4. CityService
+1. CityService
     - Add/remove cities
     - Show all cities
 
-5. LinkService  
+1. LinkService  
     - Add/remove links  
     - Get shortest link between two cities(time or distance)
     - Show all links
+    
+1. PackageService
+    - Add package
+    - Get packages for client    
+    
+1. TransportService  
+    - Add/remove transports
+    - Get transports for a certain date
+    - Show all transports
       
 **Most interactions are available through a interactive console menu**

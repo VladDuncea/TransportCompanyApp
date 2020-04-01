@@ -16,10 +16,6 @@ public abstract class Person
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -49,5 +45,14 @@ public abstract class Person
         return "ID: " + id + " First Name: " + firstName +
                 " Last Name: " + lastName +
                 " Phone Number: " + phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+
+        return id == person.id;
     }
 }
