@@ -32,6 +32,11 @@ public class TransportService
         System.out.println("New empty transport added!");
     }
 
+    public Transport getTransportById(int id)
+    {
+        return transportRepository.getTransportById(id);
+    }
+
     public String allTransports()
     {
         StringBuilder sb = new StringBuilder();

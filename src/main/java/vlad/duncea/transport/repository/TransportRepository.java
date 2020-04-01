@@ -43,6 +43,15 @@ public class TransportRepository
         return res;
     }
 
+    public Transport getTransportById(int id)
+    {
+        for(Transport t : transports)
+            if(t.getTransportID() == id) {
+                return t;
+            }
+        return null;
+    }
+
     public ArrayList<Transport> getTransports() {
         return transports;
     }

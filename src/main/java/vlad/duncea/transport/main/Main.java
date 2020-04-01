@@ -260,12 +260,13 @@ public class Main
                 else if(input == 0)
                     menuLocation = 0;
             }
-            else if(menuLocation == 6)      //Transports
+            else if(menuLocation == 8)      //Transports
             {
                 System.out.println("--Transports Menu--");
                 System.out.println("1-Add Transport");
                 System.out.println("2-Remove Transport");
                 System.out.println("3-See transports for date");
+                System.out.println("4-Send transport");
                 System.out.println("5-See all Transports");
                 System.out.println("0-Back");
 
@@ -298,6 +299,18 @@ public class Main
                     }
                     catch (Exception e) {
                         System.out.println("Wrong date input");
+                    }
+                }
+                else if (input == 4)
+                {
+                    System.out.println("Enter transport id: ");
+                    Transport t = transportService.getTransportById(scanner.nextInt());
+
+                    if(t==null)
+                        System.out.println("No transport with that id");
+                    else
+                    {
+                        t.sendTransport();
                     }
                 }
                 else if (input == 5)

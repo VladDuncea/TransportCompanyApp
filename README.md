@@ -32,6 +32,11 @@ A route is made out of multiple *links* and has two main *cities* as starting/en
 8. Package  
 Class that describes a package.  
 A package has volume,weight and is owned by a *client*.  
+
+9. Transport
+Class that describes transports.  
+Transports are created empty, the user adds packages and sets a driver with a car.
+The transport has a function for dispatching.
  
 ### Interactions
 1. DriverService
@@ -66,6 +71,7 @@ A package has volume,weight and is owned by a *client*.
 1. TransportService  
     - Add/remove transports
     - Get transports for a certain date
+    - Send transport
     - Show all transports
       
 **Most interactions are available through a interactive console menu**
