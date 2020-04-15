@@ -10,19 +10,24 @@ import java.util.Scanner;
 public class TransportService
 {
     private TransportRepository transportRepository;
+    private AuditService auditService;
 
     public TransportService()
     {
         transportRepository = new TransportRepository();
+        auditService = AuditService.getAuditService();
     }
 
     public void removeTransportByID(int id)
     {
         transportRepository.removeTransportByID(id);
+        auditService.logData("TransportService_removeTransportById");
     }
 
     public ArrayList<Transport> getTransportsByDate(Date d)
     {
+        auditService.logData("TransportService_getTransportByDate");
+
         return transportRepository.getTransportsByDate(d);
     }
 
@@ -30,15 +35,19 @@ public class TransportService
     {
         transportRepository.addTransport();
         System.out.println("New empty transport added!");
+        auditService.logData("TransportService_addTransport");
     }
 
     public Transport getTransportById(int id)
     {
+        auditService.logData("TransportService_getTransportById");
         return transportRepository.getTransportById(id);
     }
 
     public String allTransports()
     {
+        auditService.logData("TransportService_allTransports");
+
         StringBuilder sb = new StringBuilder();
 
         for(Transport t : transportRepository.getTransports())

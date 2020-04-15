@@ -8,10 +8,12 @@ import java.util.Scanner;
 public class CarService
 {
     private CarRepository carRepository;
+    private AuditService auditService;
 
     public CarService()
     {
         carRepository = new CarRepository();
+        auditService = AuditService.getAuditService();
     }
 
     public Car addCar(Scanner s)
@@ -28,6 +30,7 @@ public class CarService
         Car c = new Car(regnr,volume, null);
         carRepository.addCar(c);
 
+        auditService.logData("CarService_addCar");
         return c;
     }
 
@@ -38,10 +41,13 @@ public class CarService
             System.out.println("Car removed successfully!");
         else
             System.out.println("Car has drivers assigned to it, first remove those drivers!");
+
+        auditService.logData("CarService_removeCar");
     }
 
     public Car getCarByReg(String regNr)
     {
+        auditService.logData("CarService_getCarByReg");
         for(Car c : carRepository.getCars()) {
             if(c.getRegistrationNr().equals(regNr))
                 return c;
@@ -56,6 +62,12 @@ public class CarService
         {
             res.append(c.toString()).append("\n");
         }
+
+        auditService.logData("CarService_allCars");
         return res.toString();
+    }
+
+    public CarRepository getCarRepository() {
+        return carRepository;
     }
 }

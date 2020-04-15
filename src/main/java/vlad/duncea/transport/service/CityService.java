@@ -6,13 +6,17 @@ import vlad.duncea.transport.repository.CityRepository;
 
 import java.util.Scanner;
 
+import static vlad.duncea.transport.service.AuditService.auditService;
+
 public class CityService
 {
     CityRepository cityRepository;
+    AuditService auditService;
 
     public CityService()
     {
         cityRepository = new CityRepository();
+        auditService = AuditService.getAuditService();
     }
 
     public City addCity(Scanner s)
@@ -33,6 +37,7 @@ public class CityService
         City c = new City(name,longitude,lattitude);
         cityRepository.addCity(c);
 
+        auditService.logData("CityService_addCity");
         return c;
     }
 
@@ -40,10 +45,16 @@ public class CityService
     {
         System.out.println("Enter city name: ");
         cityRepository.removeCity(s.next());
+
+        auditService.logData("CityService_removeCity");
+
+
     }
 
     public City getCityByName(String name)
     {
+        auditService.logData("CityService_getCityByName");
+
         for(City c : cityRepository.getCities())
         {
             if(c.getName().equals(name))
@@ -59,6 +70,8 @@ public class CityService
         {
             res.append(c.toString()).append("\n");
         }
+
+        auditService.logData("CityService_allCities");
         return res.toString();
     }
 }

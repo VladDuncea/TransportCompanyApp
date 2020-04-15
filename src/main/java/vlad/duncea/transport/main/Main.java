@@ -1,6 +1,5 @@
 package vlad.duncea.transport.main;
 
-import com.sun.source.tree.WhileLoopTree;
 import vlad.duncea.transport.model.*;
 import vlad.duncea.transport.model.Package;
 import vlad.duncea.transport.service.*;
@@ -20,7 +19,11 @@ public class Main
     public static PackageService packageService;
     public static TransportService transportService;
 
-    public static void menuLoop()
+    public static CarFileService carFileService;
+    public static ClientFileService clientFileService;
+    public static DriverFileService driverFileService;
+
+    private static void menuLoop()
     {
         Scanner scanner = new Scanner(System.in);
 
@@ -48,7 +51,7 @@ public class Main
 
                 if(menuLocation == 0)
                 {
-                    return;
+                    break;
                 }
             }
             else if(menuLocation == 1)      //Cars
@@ -322,11 +325,27 @@ public class Main
             }
         }
 
-        //TODO: save data on clean exit
+        close();
+
+    }
+
+    private static void loadData()
+    {
+        carFileService.loadData();
+        clientFileService.loadData();
+        driverFileService.loadData();
+    }
+
+    private static void close()
+    {
+        carFileService.saveData();
+        clientFileService.saveData();
+        driverFileService.saveData();
     }
 
     public static void main(String[] args)
     {
+        //create services
         carService = new CarService();
         clientService = new ClientService();
         cityService = new CityService();
@@ -334,6 +353,16 @@ public class Main
         linkService = new LinkService();
         packageService = new PackageService();
         transportService = new TransportService();
+
+        //get file services
+        carFileService = CarFileService.getFileService(carService.getCarRepository());
+        clientFileService = ClientFileService.getFileService(clientService.getClientRepository());
+        driverFileService = DriverFileService.getFileService(driverService.getDriverRepository());
+
+        //load Saved data
+        loadData();
+
+        //start application
         menuLoop();
     }
 

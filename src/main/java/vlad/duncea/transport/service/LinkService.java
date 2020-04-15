@@ -9,10 +9,12 @@ import java.util.Scanner;
 public class LinkService
 {
     LinkRepository linkRepository;
+    AuditService auditService;
 
     public LinkService()
     {
         linkRepository = new LinkRepository();
+        auditService = AuditService.getAuditService();
     }
 
     public Link addLink(Scanner s)
@@ -42,21 +44,26 @@ public class LinkService
         Link l = new Link(linkRepository.getLastId(), c1, c2, length, duration);
         linkRepository.addLink(l);
 
+        auditService.logData("LinkService_addLink");
         return l;
     }
 
     public void removeLinkById(int id)
     {
         linkRepository.removeLinkById(id);
+        auditService.logData("LinkService_removeLinkById");
     }
 
     public Link getShortestLink(City city1,City city2,boolean byTime)
     {
+        auditService.logData("LinkService_getShortestLink");
         return linkRepository.getShortestLink(city1,city2,byTime);
     }
 
     public String allLinks()
     {
+        auditService.logData("LinkService_allLinks");
+
         StringBuilder res = new StringBuilder();
         for(Link l : linkRepository.getLinks())
         {

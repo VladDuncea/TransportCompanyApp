@@ -13,10 +13,12 @@ import java.util.Scanner;
 public class DriverService
 {
     private DriverRepository driverRepository;
+    private AuditService auditService;
 
     public DriverService()
     {
         driverRepository = new DriverRepository();
+        auditService = AuditService.getAuditService();
     }
 
     public Driver addDriver(Scanner s)
@@ -40,6 +42,7 @@ public class DriverService
         Driver d = new Driver(driverRepository.getLastId(), firstName, lastName, phoneNr, c, salary);
         driverRepository.addDriver(d);
 
+        auditService.logData("DriverService_addDriver");
         return d;
     }
 
@@ -47,6 +50,8 @@ public class DriverService
     {
         System.out.println("Enter driver ID: ");
         driverRepository.removeDriverById(s.nextInt());
+
+        auditService.logData("DriverService_removeDriver");
     }
 
     public Driver getDriverById(int id)
@@ -56,6 +61,8 @@ public class DriverService
             {
                 return d;
             }
+
+        auditService.logData("DriverService_getDriverById");
         return null;
     }
 
@@ -67,6 +74,8 @@ public class DriverService
             {
                 response.add(d);
             }
+
+        auditService.logData("DriverService_getDriversByCar");
         return response;
     }
 
@@ -84,10 +93,15 @@ public class DriverService
             d.setCar(c);
         else
             System.out.println("Driver/Car doesn't exist! No changes made");
+
+
+        auditService.logData("DriverService_giveCarToDriver");
     }
 
     public String allDrivers()
     {
+        auditService.logData("DriverService_allDrivers");
+
         StringBuilder res = new StringBuilder();
         for(Driver d : driverRepository.getDrivers())
         {
@@ -98,6 +112,11 @@ public class DriverService
 
     public ArrayList<Driver> getDrivers()
     {
+        auditService.logData("DriverService_getDrivers");
         return driverRepository.getDrivers();
+    }
+
+    public DriverRepository getDriverRepository() {
+        return driverRepository;
     }
 }

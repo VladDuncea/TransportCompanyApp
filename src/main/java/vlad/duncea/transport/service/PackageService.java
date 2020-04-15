@@ -13,10 +13,12 @@ import java.util.Scanner;
 public class PackageService
 {
     private PackageRepository packageRepository;
+    private AuditService auditService;
 
     public PackageService()
     {
         packageRepository = new PackageRepository();
+        auditService = AuditService.getAuditService();
     }
 
     public Package addPackage(Scanner s)
@@ -54,11 +56,13 @@ public class PackageService
         Package p = new Package(packageRepository.getLastId(), volume, weight, c1, c2, client);
         packageRepository.addPackage(p);
 
+        auditService.logData("PackageService_addPackages");
         return p;
     }
 
     public ArrayList<Package> getPackagesForClient(Client c)
     {
+        auditService.logData("PackageService_getPackagesForClient");
         return packageRepository.getPackagesByClient(c);
     }
 }
