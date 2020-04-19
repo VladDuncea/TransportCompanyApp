@@ -1,6 +1,7 @@
 package vlad.duncea.transport.service;
 
 import vlad.duncea.transport.model.Car;
+import vlad.duncea.transport.model.Route;
 import vlad.duncea.transport.repository.CarRepository;
 
 import java.util.Scanner;
@@ -24,10 +25,11 @@ public class CarService
         System.out.println("Enter car volume: ");
         float volume = s.nextFloat();
 
-        //TODO: add route here
-        //System.out.println("Enter car route: ");
+        //TODO: add route when implemented
+        //System.out.println("Enter car routeId(-1 for none): ");
+        //Route r = Main.ser;
 
-        Car c = new Car(regnr,volume, null);
+        Car c = new Car(regnr,volume, -1);
         carRepository.addCar(c);
 
         auditService.logData("CarService_addCar");

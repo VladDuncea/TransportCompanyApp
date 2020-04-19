@@ -5,44 +5,44 @@ import java.util.List;
 
 public class Route
 {
-    private ArrayList<Link> links;
-    private City from,to;
+    private ArrayList<Integer> links;
+    private String from,to;
 
-    public Route(ArrayList<Link> links, City from, City to) {
+    public Route(ArrayList<Integer> links, String from, String to) {
         this.links = links;
         this.from = from;
         this.to = to;
     }
 
-    public List<Link> getLinks() {
+    public ArrayList<Integer> getLinks() {
         return links;
     }
 
-    public void setLinks(ArrayList<Link> links) {
+    public void setLinks(ArrayList<Integer> links) {
         this.links = links;
     }
 
-    public City getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(City from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public City getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(City to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for(Link l :links)
-            sb.append(l).append("\n");
+        StringBuilder sb = new StringBuilder("LinkId's: ");
+        for(int l :links)
+            sb.append(l).append("-");
         return "Route " +
                 "links:" + sb.toString() +
                 " from: " + from +

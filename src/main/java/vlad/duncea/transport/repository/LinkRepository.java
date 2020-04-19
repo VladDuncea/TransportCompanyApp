@@ -40,7 +40,7 @@ public class LinkRepository
         return lastId;
     }
 
-    public Link getShortestLink(City c1, City c2,boolean byTime)
+    public Link getShortestLink(String c1Name, String c2Name,boolean byTime)
     {
         Link response = null;
         float minVal = Float.POSITIVE_INFINITY;
@@ -52,7 +52,7 @@ public class LinkRepository
             else
                 val = l.getLength();
 
-            if (l.linksCities(c1, c2) && val < minVal) {
+            if (l.linksCities(c1Name, c2Name) && val < minVal) {
                 response = l;
                 minVal = val;
             }

@@ -21,6 +21,10 @@ public class PackageService
         auditService = AuditService.getAuditService();
     }
 
+    public PackageRepository getPackageRepository() {
+        return packageRepository;
+    }
+
     public Package addPackage(Scanner s)
     {
         System.out.println("Enter package volume: ");
@@ -53,16 +57,16 @@ public class PackageService
             return null;
         }
 
-        Package p = new Package(packageRepository.getLastId(), volume, weight, c1, c2, client);
+        Package p = new Package(packageRepository.getLastId(), volume, weight, c1.getName(), c2.getName(), client.getId());
         packageRepository.addPackage(p);
 
         auditService.logData("PackageService_addPackages");
         return p;
     }
 
-    public ArrayList<Package> getPackagesForClient(Client c)
+    public ArrayList<Package> getPackagesForClient(int clientId)
     {
         auditService.logData("PackageService_getPackagesForClient");
-        return packageRepository.getPackagesByClient(c);
+        return packageRepository.getPackagesByClient(clientId);
     }
 }

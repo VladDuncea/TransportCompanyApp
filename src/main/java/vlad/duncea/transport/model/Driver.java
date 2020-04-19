@@ -2,21 +2,21 @@ package vlad.duncea.transport.model;
 
 public class Driver extends Person
 {
-    private Car car;
+    private String carRegNr;
     private float salary;
 
-    public Driver(int id, String firstName, String lastName, String phoneNumber, Car car, float salary) {
+    public Driver(int id, String firstName, String lastName, String phoneNumber, String carRegNr, float salary) {
         super(id, firstName, lastName, phoneNumber);
-        this.car = car;
+        this.carRegNr = carRegNr;
         this.salary = salary;
     }
 
-    public Car getCar() {
-        return car;
+    public String getCarRegNr() {
+        return carRegNr;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarRegNr(String carRegNr) {
+        this.carRegNr = carRegNr;
     }
 
     public float getSalary() {
@@ -30,7 +30,7 @@ public class Driver extends Person
     @Override
     public String toString() {
         return "Driver " + super.toString() +
-                " car: " + (car !=null ? car.getRegistrationNr() : "No car assigned") +
+                " car: " + (carRegNr !=null ? carRegNr : "No car assigned") +
                 " salary: " + salary;
     }
 }

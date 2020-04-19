@@ -20,8 +20,12 @@ public class Main
     public static TransportService transportService;
 
     public static CarFileService carFileService;
+    public static CityFileService cityFileService;
     public static ClientFileService clientFileService;
     public static DriverFileService driverFileService;
+    public static LinkFileService linkFileService;
+    public static PackageFileService packageFileService;
+    public static TransportFileService transportFileService;
 
     private static void menuLoop()
     {
@@ -160,7 +164,7 @@ public class Main
                     Driver d = driverService.getDriverById(scanner.nextInt());
 
                     if(d!=null)
-                        d.setCar(null);
+                        d.setCarRegNr(null);
                 }
                 else if (input == 5)
                 {
@@ -206,15 +210,19 @@ public class Main
                 {
                     System.out.println("Enter first city name: ");
                     City c1 = cityService.getCityByName(scanner.next());
-
                     System.out.println("Enter first city name: ");
                     City c2 = cityService.getCityByName(scanner.next());
+                    if(c1== null || c2 == null)
+                    {
+                        System.out.println("One or both of the cities are not in the database!");
+                    }
+                    else
+                    {
+                        System.out.println("1-By distance\n2-By time");
+                        int n = scanner.nextInt();
 
-                    System.out.println("1-By distance\n2-By time");
-                    int n = scanner.nextInt();
-
-                    System.out.println(linkService.getShortestLink(c1,c2,n==2));
-
+                        System.out.println(linkService.getShortestLink(c1.getName(),c2.getName(),n==2));
+                    }
                 }
                 else if (input == 5)
                 {
@@ -246,15 +254,22 @@ public class Main
                 {
                     System.out.println("Enter client id: ");
                     Client c = clientService.getClientById(scanner.nextInt());
-
-                    ArrayList<vlad.duncea.transport.model.Package> packages = packageService.getPackagesForClient(c);
-                    if(packages.isEmpty())
-                        System.out.println("No packages");
+                    if(c == null)
+                    {
+                        System.out.println("There is no client with that ID in the database!");
+                    }
                     else
                     {
-                        for(Package p : packages)
-                            System.out.println(p);
+                        ArrayList<vlad.duncea.transport.model.Package> packages = packageService.getPackagesForClient(c.getId());
+                        if(packages.isEmpty())
+                            System.out.println("No packages");
+                        else
+                        {
+                            for(Package p : packages)
+                                System.out.println(p);
+                        }
                     }
+
                 }
                 else if (input == 5)
                 {
@@ -332,15 +347,23 @@ public class Main
     private static void loadData()
     {
         carFileService.loadData();
+        cityFileService.loadData();
         clientFileService.loadData();
         driverFileService.loadData();
+        linkFileService.loadData();
+        packageFileService.loadData();
+        transportFileService.loadData();
     }
 
     private static void close()
     {
         carFileService.saveData();
+        cityFileService.saveData();
         clientFileService.saveData();
         driverFileService.saveData();
+        linkFileService.saveData();
+        packageFileService.saveData();
+        transportFileService.saveData();
     }
 
     public static void main(String[] args)
@@ -356,8 +379,12 @@ public class Main
 
         //get file services
         carFileService = CarFileService.getFileService(carService.getCarRepository());
+        cityFileService = CityFileService.getFileService(cityService.getCityRepository());
         clientFileService = ClientFileService.getFileService(clientService.getClientRepository());
         driverFileService = DriverFileService.getFileService(driverService.getDriverRepository());
+        linkFileService = LinkFileService.getFileService(linkService.getLinkRepository());
+        packageFileService = PackageFileService.getFileService(packageService.getPackageRepository());
+        transportFileService = TransportFileService.getFileService(transportService.getTransportRepository());
 
         //load Saved data
         loadData();

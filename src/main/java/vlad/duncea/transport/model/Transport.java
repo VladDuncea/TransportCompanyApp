@@ -7,24 +7,33 @@ import java.util.Date;
 public class Transport implements Comparable
 {
     private int transportID;
-    private ArrayList<Package> packages;
+    private ArrayList<Integer> packages;
     private Date transportDate;
-    private Driver driver;
-    private Car car;
+    private int driverId;
+    private String carRegNr;
+
+    public Transport(int transportID, ArrayList<Integer> packages,Date date,int driverId,String carRegNr )
+    {
+        this.transportID = transportID;
+        this.packages = packages;
+        this.transportDate = date;
+        this.driverId = driverId;
+        this.carRegNr = carRegNr;
+    }
 
     public Transport(int transportID) {
         this.transportID = transportID;
         packages = new ArrayList<>();
         transportDate = null;
-        driver = null;
-        car = null;
+        driverId = -1;
+        carRegNr = null;
     }
 
     public int getTransportID() {
         return transportID;
     }
 
-    public ArrayList<Package> getPackages() {
+    public ArrayList<Integer> getPackages() {
         return packages;
     }
 
@@ -32,12 +41,12 @@ public class Transport implements Comparable
         return transportDate;
     }
 
-    public Driver getDriver() {
-        return driver;
+    public int getDriverId() {
+        return driverId;
     }
 
-    public Car getCar() {
-        return car;
+    public String getCarRegNr() {
+        return carRegNr;
     }
 
     //function takes driver and sets also the car to car of driver
@@ -49,19 +58,19 @@ public class Transport implements Comparable
             return;
         }
 
-        if(d.getCar() == null)
+        if(d.getCarRegNr() == null)
         {
             System.out.println("Cant put driver with no car to transport!");
             return;
         }
-        driver = d;
-        car = d.getCar();
+        driverId = d.getId();
+        carRegNr = d.getCarRegNr();
     }
 
     public void addPackage(Package p)
     {
         if(!alreadySent())
-            packages.add(p);
+            packages.add(p.getPackageID());
     }
 
     //send transport if not already sent
@@ -79,18 +88,24 @@ public class Transport implements Comparable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(Package p : packages)
-            sb.append(p.getPackageID()).append(" ");
-
-        if(sb.length() == 0)
+        if(packages.isEmpty())
+        {
             sb.append("No packages");
+        }
+        else
+        {
+            sb.append("PackagesId:");
+            for(int p : packages)
+                sb.append(p).append(",");
+        }
+
 
         return "Transport ID: " + transportID +
                 " packages: " + sb.toString() +
                 " transportDate: " + (transportDate==null ? "Not sent" : transportDate) +
-                " driver ID: " + (driver== null ? "No driver" : driver.getId())+
-                " car: " + (car == null ? "No car" : car.getRegistrationNr()) +
-                " route: " + (car == null ? "No route" : car.getRoute());
+                " driver ID: " + (driverId == -1 ? "No driver" : driverId)+
+                " car: " + (carRegNr == null ? "No car" : carRegNr);// +
+                //" route: " + (car == null ? "No route" : car.getRoute());
     }
 
     @Override

@@ -41,11 +41,15 @@ public class LinkService
         System.out.println("Enter link duration: ");
         float duration = s.nextFloat();
 
-        Link l = new Link(linkRepository.getLastId(), c1, c2, length, duration);
+        Link l = new Link(linkRepository.getLastId(), c1.getName(), c2.getName(), length, duration);
         linkRepository.addLink(l);
 
         auditService.logData("LinkService_addLink");
         return l;
+    }
+
+    public LinkRepository getLinkRepository() {
+        return linkRepository;
     }
 
     public void removeLinkById(int id)
@@ -54,10 +58,10 @@ public class LinkService
         auditService.logData("LinkService_removeLinkById");
     }
 
-    public Link getShortestLink(City city1,City city2,boolean byTime)
+    public Link getShortestLink(String  c1Name,String c2Name,boolean byTime)
     {
         auditService.logData("LinkService_getShortestLink");
-        return linkRepository.getShortestLink(city1,city2,byTime);
+        return linkRepository.getShortestLink(c1Name,c2Name,byTime);
     }
 
     public String allLinks()

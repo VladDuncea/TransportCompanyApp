@@ -31,7 +31,7 @@ public class CarFileService implements FileService
             while((line = input.readLine()) != null)
             {
                 String[] values = line.split(",");
-                Car c = new Car(values[0],Float.parseFloat(values[1]),null);
+                Car c = new Car(values[0],Float.parseFloat(values[1]),Integer.parseInt(values[2]));
                 carRepository.addCar(c);
             }
 
@@ -56,7 +56,7 @@ public class CarFileService implements FileService
                 output.write(Float.toString(c.getVolume()));
                 output.write(",");
                 //output.write(c.getRegistrationNr());
-                output.write("NULL");
+                output.write(Integer.toString(c.getRouteId()));
                 output.newLine();
                 output.flush();
             }

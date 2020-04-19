@@ -41,6 +41,10 @@ public class CityService
         return c;
     }
 
+    public CityRepository getCityRepository() {
+        return cityRepository;
+    }
+
     public void removeCity(Scanner s)
     {
         System.out.println("Enter city name: ");

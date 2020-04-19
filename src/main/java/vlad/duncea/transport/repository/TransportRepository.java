@@ -22,6 +22,10 @@ public class TransportRepository
     {
         transports.add(new Transport(lastId++));
     }
+    public void addTransport(Transport t)
+    {
+        transports.add(t);
+    }
 
     public void removeTransportByID(int id)
     {

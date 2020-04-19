@@ -4,14 +4,14 @@ public class Car implements Comparable
 {
     private String registrationNr;
     private float volume;
-    private Route route;
+    private int routeId;
 
-    public Car(String registration_nr, float volume, Route route) {
+    public Car(String registration_nr, float volume, int routeId) {
         if(registration_nr == null)
             throw new NullPointerException();
         this.registrationNr = registration_nr;
         this.volume = volume;
-        this.route = route;
+        this.routeId = routeId;
     }
 
     public String getRegistrationNr() {
@@ -30,19 +30,19 @@ public class Car implements Comparable
         this.volume = volume;
     }
 
-    public Route getRoute() {
-        return route;
+    public int getRouteId() {
+        return routeId;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRouteId(int routeId) {
+        this.routeId = routeId;
     }
 
     @Override
     public String toString() {
         return "Car: "+ registrationNr +
                 " Volume: " + volume +
-                " Route: " + (route == null ? "No route" : route.toString());
+                " RouteId: " + (routeId == -1 ? "No route" : routeId);
     }
 
     @Override

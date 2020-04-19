@@ -31,12 +31,12 @@ public class PackageRepository
         packages.remove(p);
     }
 
-    public ArrayList<Package> getPackagesByClient(Client c)
+    public ArrayList<Package> getPackagesByClient(int clientId)
     {
         ArrayList<Package> res = new ArrayList<>();
         for(Package p : packages)
         {
-            if(p.getOwner().equals(c))
+            if(p.getClientId() == clientId)
                 res.add(p);
         }
 

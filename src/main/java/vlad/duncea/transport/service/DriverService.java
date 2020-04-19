@@ -34,12 +34,22 @@ public class DriverService
 
         System.out.println("Enter car registration number('None' for none): ");
         String regNr = s.next();
-        Car c = Main.carService.getCarByReg(regNr);
+        if(!regNr.equals("None"))
+        {
+            Car c = Main.carService.getCarByReg(regNr);
+            if(c == null)
+            {
+                System.out.println("There is no char with that reg nr!");
+                return null;
+            }
+        }
+        else
+            regNr = null;
 
         System.out.println("Enter salary: ");
         float salary = s.nextFloat();
 
-        Driver d = new Driver(driverRepository.getLastId(), firstName, lastName, phoneNr, c, salary);
+        Driver d = new Driver(driverRepository.getLastId(), firstName, lastName, phoneNr, regNr, salary);
         driverRepository.addDriver(d);
 
         auditService.logData("DriverService_addDriver");
@@ -70,7 +80,7 @@ public class DriverService
     {
         ArrayList<Driver> response = new ArrayList<>();
         for(Driver d : driverRepository.getDrivers())
-            if(d.getCar().equals(c))
+            if(d.getCarRegNr()!=null && d.getCarRegNr().equals(c.getRegistrationNr()))
             {
                 response.add(d);
             }
@@ -90,9 +100,9 @@ public class DriverService
         Driver d = getDriverById(driverId);
 
         if(d != null&& c != null)
-            d.setCar(c);
+            d.setCarRegNr(c.getRegistrationNr());
         else
-            System.out.println("Driver/Car doesn't exist! No changes made");
+            System.out.println("Driver/Car doesn't exist! No changes made.");
 
 
         auditService.logData("DriverService_giveCarToDriver");

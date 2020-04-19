@@ -38,6 +38,10 @@ public class TransportService
         auditService.logData("TransportService_addTransport");
     }
 
+    public TransportRepository getTransportRepository() {
+        return transportRepository;
+    }
+
     public Transport getTransportById(int id)
     {
         auditService.logData("TransportService_getTransportById");

@@ -31,7 +31,8 @@ public class DriverFileService implements FileService
             while((line = input.readLine()) != null)
             {
                 String[] values = line.split(",");
-                Driver d = new Driver(Integer.parseInt(values[0]),values[1],values[2],values[3],null,Float.parseFloat(values[5]));
+                Driver d = new Driver(Integer.parseInt(values[0]),values[1],values[2],values[3],
+                        (values[4].equals("NULL") ? null:values[4]),Float.parseFloat(values[5]));
                 driverRepository.addDriver(d);
             }
 
@@ -59,8 +60,7 @@ public class DriverFileService implements FileService
                 output.write(",");
                 output.write(d.getPhoneNumber());
                 output.write(",");
-                //output.write(d.getCar());
-                output.write("NULL");
+                output.write((d.getCarRegNr() == null ? "NULL":d.getCarRegNr()));
                 output.write(",");
                 output.write(Float.toString(d.getSalary()));
                 output.newLine();
