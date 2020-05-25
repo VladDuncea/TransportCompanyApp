@@ -1,19 +1,31 @@
 package vlad.duncea.transport.service;
 
+import vlad.duncea.transport.main.Main;
 import vlad.duncea.transport.model.Car;
 import vlad.duncea.transport.model.Route;
+import vlad.duncea.transport.repository.CarDBRepository;
 import vlad.duncea.transport.repository.CarRepository;
+import vlad.duncea.transport.repository.CarRepositoryInterface;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CarService
 {
-    private CarRepository carRepository;
+    private CarRepositoryInterface carRepository;
     private AuditService auditService;
 
     public CarService()
     {
-        carRepository = new CarRepository();
+        this(null);
+    }
+
+    public CarService(Connection connection)
+    {
+        //Use correct repo
+        carRepository = Main.USE_DATABASE ? new CarDBRepository(connection): new CarRepository();
+
         auditService = AuditService.getAuditService();
     }
 
@@ -30,7 +42,11 @@ public class CarService
         //Route r = Main.ser;
 
         Car c = new Car(regnr,volume, -1);
-        carRepository.addCar(c);
+        try {
+            carRepository.addCar(c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("CarService_addCar");
         return c;
@@ -39,10 +55,14 @@ public class CarService
     public void removeCar(Scanner s)
     {
         System.out.println("Enter registratio nr:");
-        if(carRepository.removeCar(s.next()))
-            System.out.println("Car removed successfully!");
-        else
-            System.out.println("Car has drivers assigned to it, first remove those drivers!");
+        try {
+            if(carRepository.removeCar(s.next()))
+                System.out.println("Car removed successfully!");
+            else
+                System.out.println("Car has drivers assigned to it, first remove those drivers!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("CarService_removeCar");
     }
@@ -50,9 +70,13 @@ public class CarService
     public Car getCarByReg(String regNr)
     {
         auditService.logData("CarService_getCarByReg");
-        for(Car c : carRepository.getCars()) {
-            if(c.getRegistrationNr().equals(regNr))
-                return c;
+        try {
+            for(Car c : carRepository.getCars()) {
+                if(c.getRegistrationNr().equals(regNr))
+                    return c;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -60,16 +84,20 @@ public class CarService
     public String allCars()
     {
         StringBuilder res = new StringBuilder();
-        for(Car c : carRepository.getCars())
-        {
-            res.append(c.toString()).append("\n");
+        try {
+            for(Car c : carRepository.getCars())
+            {
+                res.append(c.toString()).append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         auditService.logData("CarService_allCars");
         return res.toString();
     }
 
-    public CarRepository getCarRepository() {
+    public CarRepositoryInterface getCarRepository() {
         return carRepository;
     }
 }

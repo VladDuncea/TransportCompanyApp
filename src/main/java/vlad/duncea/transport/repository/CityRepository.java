@@ -4,7 +4,7 @@ import vlad.duncea.transport.model.City;
 
 import java.util.ArrayList;
 
-public class CityRepository
+public class CityRepository implements CityRepositoryInterface
 {
     private ArrayList<City> cities;
 

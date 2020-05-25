@@ -2,8 +2,13 @@ package vlad.duncea.transport.main;
 
 import vlad.duncea.transport.model.*;
 import vlad.duncea.transport.model.Package;
+import vlad.duncea.transport.repository.CarRepository;
+import vlad.duncea.transport.repository.CityRepository;
+import vlad.duncea.transport.repository.ClientRepository;
+import vlad.duncea.transport.repository.DbConnectionUtil;
 import vlad.duncea.transport.service.*;
 
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +16,9 @@ import java.util.Scanner;
 
 public class Main
 {
+    // whether to use database or file sistem
+    public static final Boolean USE_DATABASE = true;
+
     public static CarService carService;
     public static ClientService clientService;
     public static CityService cityService;
@@ -346,9 +354,13 @@ public class Main
 
     private static void loadData()
     {
-        carFileService.loadData();
-        cityFileService.loadData();
-        clientFileService.loadData();
+        if(!USE_DATABASE) {
+            carFileService.loadData();
+            cityFileService.loadData();
+            clientFileService.loadData();
+        }
+
+
         driverFileService.loadData();
         linkFileService.loadData();
         packageFileService.loadData();
@@ -357,9 +369,12 @@ public class Main
 
     private static void close()
     {
-        carFileService.saveData();
-        cityFileService.saveData();
-        clientFileService.saveData();
+        if(!USE_DATABASE) {
+            carFileService.saveData();
+            cityFileService.saveData();
+            clientFileService.saveData();
+        }
+
         driverFileService.saveData();
         linkFileService.saveData();
         packageFileService.saveData();
@@ -368,19 +383,29 @@ public class Main
 
     public static void main(String[] args)
     {
+        Connection connection = null;
+        if (USE_DATABASE) {
+            //Open DB connection
+            connection = DbConnectionUtil.getDBConnection();
+        }
+
         //create services
-        carService = new CarService();
-        clientService = new ClientService();
-        cityService = new CityService();
+        carService = new CarService(connection);
+        cityService = new CityService(connection);
+        clientService = new ClientService(connection);
         driverService = new DriverService();
         linkService = new LinkService();
         packageService = new PackageService();
         transportService = new TransportService();
 
+
         //get file services
-        carFileService = CarFileService.getFileService(carService.getCarRepository());
-        cityFileService = CityFileService.getFileService(cityService.getCityRepository());
-        clientFileService = ClientFileService.getFileService(clientService.getClientRepository());
+        if (!USE_DATABASE) {
+            carFileService = CarFileService.getFileService((CarRepository)carService.getCarRepository());
+            cityFileService = CityFileService.getFileService((CityRepository)cityService.getCityRepository());
+            clientFileService = ClientFileService.getFileService((ClientRepository)clientService.getClientRepository());
+        }
+
         driverFileService = DriverFileService.getFileService(driverService.getDriverRepository());
         linkFileService = LinkFileService.getFileService(linkService.getLinkRepository());
         packageFileService = PackageFileService.getFileService(packageService.getPackageRepository());

@@ -2,20 +2,35 @@ package vlad.duncea.transport.service;
 
 import vlad.duncea.transport.model.City;
 import vlad.duncea.transport.model.Client;
+import vlad.duncea.transport.repository.CityDBRepository;
 import vlad.duncea.transport.repository.CityRepository;
+import vlad.duncea.transport.repository.CityRepositoryInterface;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import static vlad.duncea.transport.service.AuditService.auditService;
 
 public class CityService
 {
-    CityRepository cityRepository;
+    CityRepositoryInterface cityRepository;
     AuditService auditService;
 
-    public CityService()
+    public CityService() {
+        this(null);
+    }
+    public CityService(Connection connection)
     {
-        cityRepository = new CityRepository();
+        if(connection!= null)
+        {
+            cityRepository = new CityDBRepository(connection);
+        }
+        else
+        {
+            cityRepository = new CityRepository();
+        }
+
         auditService = AuditService.getAuditService();
     }
 
@@ -35,20 +50,28 @@ public class CityService
         float lattitude = s.nextFloat();
 
         City c = new City(name,longitude,lattitude);
-        cityRepository.addCity(c);
+        try {
+            cityRepository.addCity(c);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("CityService_addCity");
         return c;
     }
 
-    public CityRepository getCityRepository() {
+    public CityRepositoryInterface getCityRepository() {
         return cityRepository;
     }
 
     public void removeCity(Scanner s)
     {
         System.out.println("Enter city name: ");
-        cityRepository.removeCity(s.next());
+        try {
+            cityRepository.removeCity(s.next());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("CityService_removeCity");
 
@@ -59,10 +82,14 @@ public class CityService
     {
         auditService.logData("CityService_getCityByName");
 
-        for(City c : cityRepository.getCities())
-        {
-            if(c.getName().equals(name))
-                return c;
+        try {
+            for(City c : cityRepository.getCities())
+            {
+                if(c.getName().equals(name))
+                    return c;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -70,9 +97,13 @@ public class CityService
     public String allCities()
     {
         StringBuilder res = new StringBuilder();
-        for(City c : cityRepository.getCities())
-        {
-            res.append(c.toString()).append("\n");
+        try {
+            for(City c : cityRepository.getCities())
+            {
+                res.append(c.toString()).append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         auditService.logData("CityService_allCities");

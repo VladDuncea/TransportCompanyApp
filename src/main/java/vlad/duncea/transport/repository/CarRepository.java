@@ -6,7 +6,7 @@ import vlad.duncea.transport.model.Car;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-public class CarRepository
+public class CarRepository implements CarRepositoryInterface
 {
     private TreeSet<Car> cars;
 
@@ -23,10 +23,6 @@ public class CarRepository
         cars.add(c);
     }
 
-    public void removeCar(Car c)
-    {
-        cars.remove(c);
-    }
     public Boolean removeCar(String re)
     {
         Car toDel = null;
@@ -44,7 +40,6 @@ public class CarRepository
             cars.remove(toDel);
             return true;
         }
-
         return false;
     }
 

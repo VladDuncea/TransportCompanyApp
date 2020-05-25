@@ -4,7 +4,7 @@ import vlad.duncea.transport.model.Client;
 
 import java.util.ArrayList;
 
-public class ClientRepository
+public class ClientRepository implements ClientRepositoryInterface
 {
     private int last_id;
     private ArrayList<Client> clients;
@@ -21,6 +21,8 @@ public class ClientRepository
 
     public void addClient(Client c)
     {
+        if(c.getId() == -1)
+            c.setId(last_id);
         clients.add(c);
         last_id += 1;
     }
