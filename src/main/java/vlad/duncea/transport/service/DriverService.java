@@ -5,19 +5,35 @@ import vlad.duncea.transport.model.Car;
 import vlad.duncea.transport.model.Client;
 import vlad.duncea.transport.model.Driver;
 import vlad.duncea.transport.repository.ClientRepository;
+import vlad.duncea.transport.repository.DriverDBRepository;
 import vlad.duncea.transport.repository.DriverRepository;
+import vlad.duncea.transport.repository.DriverRepositoryInterface;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DriverService
 {
-    private DriverRepository driverRepository;
+    private DriverRepositoryInterface driverRepository;
     private AuditService auditService;
 
     public DriverService()
     {
-        driverRepository = new DriverRepository();
+        this(null);
+    }
+
+    public DriverService(Connection connection)
+    {
+        if(connection!=null)
+        {
+            driverRepository = new DriverDBRepository(connection);
+        }
+        else
+        {
+            driverRepository = new DriverRepository();
+        }
         auditService = AuditService.getAuditService();
     }
 
@@ -39,7 +55,7 @@ public class DriverService
             Car c = Main.carService.getCarByReg(regNr);
             if(c == null)
             {
-                System.out.println("There is no char with that reg nr!");
+                System.out.println("There is no car with that reg nr!");
                 return null;
             }
         }
@@ -49,8 +65,12 @@ public class DriverService
         System.out.println("Enter salary: ");
         float salary = s.nextFloat();
 
-        Driver d = new Driver(driverRepository.getLastId(), firstName, lastName, phoneNr, regNr, salary);
-        driverRepository.addDriver(d);
+        Driver d = new Driver(-1, firstName, lastName, phoneNr, regNr, salary);
+        try {
+            driverRepository.addDriver(d);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("DriverService_addDriver");
         return d;
@@ -59,18 +79,26 @@ public class DriverService
     public void removeDriver(Scanner s)
     {
         System.out.println("Enter driver ID: ");
-        driverRepository.removeDriverById(s.nextInt());
+        try {
+            driverRepository.removeDriverById(s.nextInt());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("DriverService_removeDriver");
     }
 
     public Driver getDriverById(int id)
     {
-        for(Driver d : driverRepository.getDrivers())
-            if(d.getId() == id)
-            {
-                return d;
-            }
+        try {
+            for(Driver d : driverRepository.getDrivers())
+                if(d.getId() == id)
+                {
+                    return d;
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("DriverService_getDriverById");
         return null;
@@ -79,11 +107,15 @@ public class DriverService
     public ArrayList<Driver> getDriversByCar(Car c)
     {
         ArrayList<Driver> response = new ArrayList<>();
-        for(Driver d : driverRepository.getDrivers())
-            if(d.getCarRegNr()!=null && d.getCarRegNr().equals(c.getRegistrationNr()))
-            {
-                response.add(d);
-            }
+        try {
+            for(Driver d : driverRepository.getDrivers())
+                if(d.getCarRegNr()!=null && d.getCarRegNr().equals(c.getRegistrationNr()))
+                {
+                    response.add(d);
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("DriverService_getDriversByCar");
         return response;
@@ -95,15 +127,16 @@ public class DriverService
         int driverId = s.nextInt();
 
         System.out.println("Enter Car reg nr: ");
-        Car c = Main.carService.getCarByReg(s.next());
+        String regNr = s.next();
 
-        Driver d = getDriverById(driverId);
-
-        if(d != null&& c != null)
-            d.setCarRegNr(c.getRegistrationNr());
-        else
-            System.out.println("Driver/Car doesn't exist! No changes made.");
-
+        try {
+            if(driverRepository.giveCarToDriver(driverId,regNr))
+                System.out.println("Update performed!");
+            else
+                System.out.println("Driver/Car doesn't exist! No changes made.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         auditService.logData("DriverService_giveCarToDriver");
     }
@@ -113,9 +146,13 @@ public class DriverService
         auditService.logData("DriverService_allDrivers");
 
         StringBuilder res = new StringBuilder();
-        for(Driver d : driverRepository.getDrivers())
-        {
-            res.append(d.toString()).append("\n");
+        try {
+            for(Driver d : driverRepository.getDrivers())
+            {
+                res.append(d.toString()).append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return res.toString();
     }
@@ -123,10 +160,15 @@ public class DriverService
     public ArrayList<Driver> getDrivers()
     {
         auditService.logData("DriverService_getDrivers");
-        return driverRepository.getDrivers();
+        try {
+            return driverRepository.getDrivers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public DriverRepository getDriverRepository() {
+    public DriverRepositoryInterface getDriverRepository() {
         return driverRepository;
     }
 }

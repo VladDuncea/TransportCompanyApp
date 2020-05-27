@@ -1,10 +1,14 @@
 package vlad.duncea.transport.repository;
 
+import vlad.duncea.transport.main.Main;
+import vlad.duncea.transport.model.Car;
 import vlad.duncea.transport.model.Driver;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DriverRepository
+
+public class DriverRepository implements DriverRepositoryInterface
 {
     private int lastId;
     private ArrayList<Driver> drivers;
@@ -42,6 +46,28 @@ public class DriverRepository
                 drivers.remove(d);
                 break;
             }
+    }
+
+    @Override
+    public Driver getDriverById(int id) {
+        for(Driver d : drivers)
+            if(d.getId() == id)
+            {
+                return d;
+            }
+        return null;
+    }
+
+    @Override
+    public boolean giveCarToDriver(int driverId, String regNr) {
+        Driver d = this.getDriverById(driverId);
+        Car c = Main.carService.getCarByReg(regNr);
+        if(d != null&& c != null)
+        {
+            d.setCarRegNr(c.getRegistrationNr());
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<Driver> getDrivers() {

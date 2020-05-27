@@ -11,5 +11,7 @@ public interface CarRepositoryInterface {
 
     Boolean removeCar(String regNr) throws SQLException;
 
+    Car getCarByRegNr(String regNr) throws SQLException;
+
     ArrayList<Car> getCars() throws SQLException;
 }

@@ -59,6 +59,23 @@ public class CarDBRepository implements CarRepositoryInterface
         return true;
     }
 
+    @Override
+    public Car getCarByRegNr(String regNr) throws SQLException {
+        //Verify if car is attached to drivers
+        String sql = "SELECT * FROM cars WHERE regNr = ?";
+        PreparedStatement statement =  connection.prepareStatement(sql);
+        statement.setString(1, regNr);
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next())
+        {
+            int routeId = resultSet.getInt(3);
+            if (resultSet.wasNull())
+                routeId = -1;
+            return new Car(resultSet.getString(1), resultSet.getFloat(2), routeId);
+        }
+        return null;
+    }
+
 
     public ArrayList<Car> getCars() throws SQLException {
         ArrayList<Car> cars = new ArrayList<>();

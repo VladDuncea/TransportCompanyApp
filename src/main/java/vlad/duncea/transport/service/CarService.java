@@ -71,10 +71,7 @@ public class CarService
     {
         auditService.logData("CarService_getCarByReg");
         try {
-            for(Car c : carRepository.getCars()) {
-                if(c.getRegistrationNr().equals(regNr))
-                    return c;
-            }
+            return carRepository.getCarByRegNr(regNr);
         } catch (SQLException e) {
             e.printStackTrace();
         }

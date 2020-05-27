@@ -3,6 +3,7 @@ package vlad.duncea.transport.repository;
 import vlad.duncea.transport.main.Main;
 import vlad.duncea.transport.model.Car;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
@@ -41,6 +42,15 @@ public class CarRepository implements CarRepositoryInterface
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Car getCarByRegNr(String regNr) throws SQLException {
+        for(Car c : cars) {
+            if(c.getRegistrationNr().equals(regNr))
+                return c;
+        }
+        return null;
     }
 
     public ArrayList<Car> getCars() {
