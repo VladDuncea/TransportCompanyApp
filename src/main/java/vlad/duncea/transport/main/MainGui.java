@@ -18,6 +18,13 @@ public class MainGui {
         f.getContentPane().setBackground(Color.darkGray);
         f.setLayout(null);
 
+        JLabel title = new JLabel("Transport Application");
+        title.setBounds(0,10,300,30);
+        title.setHorizontalTextPosition(SwingConstants.CENTER);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setForeground(Color.white);
+        f.add(title);
+
         button = new JButton("Car Menu");
         button.setBounds(100, 60, 100, 30);
         button.addActionListener(event -> openCarMenu());

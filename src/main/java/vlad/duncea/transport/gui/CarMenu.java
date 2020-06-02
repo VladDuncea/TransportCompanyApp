@@ -15,7 +15,7 @@ public class CarMenu extends JFrame {
         getContentPane().setBackground(Color.darkGray);
         setLayout(null);
 
-        JLabel title = new JLabel("City Menu");
+        JLabel title = new JLabel("Car Menu");
         title.setBounds(0,10,300,30);
         title.setHorizontalTextPosition(SwingConstants.CENTER);
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -24,13 +24,18 @@ public class CarMenu extends JFrame {
 
         JButton button;
         button = new JButton("Add car");
-        button.setBounds(100, 60, 100, 30);
+        button.setBounds(75, 60, 150, 30);
         button.addActionListener(event -> openAddCar());
         add(button);
 
         button = new JButton("View cars");
-        button.setBounds(100, 100, 100, 30);
+        button.setBounds(75, 100, 150, 30);
         button.addActionListener(event -> openViewCars());
+        add(button);
+
+        button = new JButton("Remove car");
+        button.setBounds(75, 140, 150, 30);
+        button.addActionListener(event -> openRemove());
         add(button);
 
         button = new JButton("Back");
@@ -63,6 +68,16 @@ public class CarMenu extends JFrame {
     {
         try {
             new CarViewFrame(this);
+            setEnabled(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openRemove()
+    {
+        try {
+            new CarRemoveFrame(this);
             setEnabled(false);
         } catch (SQLException e) {
             e.printStackTrace();

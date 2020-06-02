@@ -14,14 +14,26 @@ public class CityMenu extends JFrame {
         getContentPane().setBackground(Color.darkGray);
         setLayout(null);
 
+        JLabel title = new JLabel("City Menu");
+        title.setBounds(0,10,300,30);
+        title.setHorizontalTextPosition(SwingConstants.CENTER);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setForeground(Color.white);
+        add(title);
+
         JButton button;
         button = new JButton("Add city");
-        button.setBounds(100, 60, 100, 30);
+        button.setBounds(75, 60, 150, 30);
         button.addActionListener(event -> openAdd());
         add(button);
 
         button = new JButton("View cities");
-        button.setBounds(100, 100, 100, 30);
+        button.setBounds(75, 100, 150, 30);
+        button.addActionListener(event -> openView());
+        add(button);
+
+        button = new JButton("Remove city");
+        button.setBounds(75, 140, 150, 30);
         button.addActionListener(event -> openView());
         add(button);
 
