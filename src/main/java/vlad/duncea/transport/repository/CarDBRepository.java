@@ -12,13 +12,13 @@ import java.util.TreeSet;
 
 public class CarDBRepository implements CarRepositoryInterface
 {
-    private Connection connection;
 
-    public CarDBRepository(Connection connection) {
-        this.connection = connection;
+    public CarDBRepository() {
+
     }
 
     public void addCar(Car c) throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         String sqlAdd;
 
         //Tratam posibilitatea ca ruta sa fie inexistenta
@@ -39,9 +39,11 @@ public class CarDBRepository implements CarRepositoryInterface
         }
 
         statement.executeUpdate();
+        DbConnectionUtil.closeDBConnection(connection);
     }
 
     public Boolean removeCar(String regNr) throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         //Verify if car is attached to drivers
         String sqlGetDriversByCar = "SELECT COUNT(*) FROM drivers WHERE carRegNr = ?";
         PreparedStatement statement =  connection.prepareStatement(sqlGetDriversByCar);
@@ -49,6 +51,7 @@ public class CarDBRepository implements CarRepositoryInterface
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next() && resultSet.getInt(1) !=0)
         {
+            DbConnectionUtil.closeDBConnection(connection);
             return false;
         }
 
@@ -56,28 +59,34 @@ public class CarDBRepository implements CarRepositoryInterface
         statement =  connection.prepareStatement(sqlDelete);
         statement.setString(1, regNr);
         statement.executeUpdate();
+        DbConnectionUtil.closeDBConnection(connection);
         return true;
     }
 
     @Override
     public Car getCarByRegNr(String regNr) throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         //Verify if car is attached to drivers
         String sql = "SELECT * FROM cars WHERE regNr = ?";
         PreparedStatement statement =  connection.prepareStatement(sql);
         statement.setString(1, regNr);
         ResultSet resultSet = statement.executeQuery();
+
         if(resultSet.next())
         {
             int routeId = resultSet.getInt(3);
             if (resultSet.wasNull())
                 routeId = -1;
+            DbConnectionUtil.closeDBConnection(connection);
             return new Car(resultSet.getString(1), resultSet.getFloat(2), routeId);
         }
+        DbConnectionUtil.closeDBConnection(connection);
         return null;
     }
 
 
     public ArrayList<Car> getCars() throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         ArrayList<Car> cars = new ArrayList<>();
 
         String sqlSelect = "SELECT * FROM cars";
@@ -91,6 +100,7 @@ public class CarDBRepository implements CarRepositoryInterface
             Car c = new Car(resultSet.getString(1), resultSet.getFloat(2), routeId);
             cars.add(c);
         }
+        DbConnectionUtil.closeDBConnection(connection);
         return cars;
     }
 }

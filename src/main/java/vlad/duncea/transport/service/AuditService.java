@@ -22,7 +22,7 @@ public class AuditService
             //Write header if file is new
             if(newf)
             {
-                writer.write("Functie,Data");
+                writer.write("Thread_Name,Functie,Data");
                 writer.newLine();
             }
             writer.flush();
@@ -38,7 +38,7 @@ public class AuditService
     public void logData(String funcName)
     {
         try{
-            writer.write(funcName + "," + java.time.LocalDateTime.now().toString());
+            writer.write(Thread.currentThread().getName()+ "," + funcName + "," + java.time.LocalDateTime.now().toString());
             writer.newLine();
             writer.flush();
         }

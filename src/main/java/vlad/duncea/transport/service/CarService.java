@@ -18,13 +18,8 @@ public class CarService
 
     public CarService()
     {
-        this(null);
-    }
-
-    public CarService(Connection connection)
-    {
         //Use correct repo
-        carRepository = Main.USE_DATABASE ? new CarDBRepository(connection): new CarRepository();
+        carRepository = Main.USE_DATABASE ? new CarDBRepository(): new CarRepository();
 
         auditService = AuditService.getAuditService();
     }

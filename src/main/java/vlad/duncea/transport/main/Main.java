@@ -385,8 +385,8 @@ public class Main
         }
 
         //create services
-        carService = new CarService(connection);
-        cityService = new CityService(connection);
+        carService = new CarService();
+        cityService = new CityService();
         clientService = new ClientService(connection);
         driverService = new DriverService(connection);
         linkService = new LinkService();

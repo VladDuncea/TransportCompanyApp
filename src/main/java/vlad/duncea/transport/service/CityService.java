@@ -1,12 +1,9 @@
 package vlad.duncea.transport.service;
 
+import vlad.duncea.transport.main.Main;
 import vlad.duncea.transport.model.City;
-import vlad.duncea.transport.model.Client;
-import vlad.duncea.transport.repository.CityDBRepository;
-import vlad.duncea.transport.repository.CityRepository;
-import vlad.duncea.transport.repository.CityRepositoryInterface;
+import vlad.duncea.transport.repository.*;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -17,19 +14,11 @@ public class CityService
     CityRepositoryInterface cityRepository;
     AuditService auditService;
 
-    public CityService() {
-        this(null);
-    }
-    public CityService(Connection connection)
+
+    public CityService()
     {
-        if(connection!= null)
-        {
-            cityRepository = new CityDBRepository(connection);
-        }
-        else
-        {
-            cityRepository = new CityRepository();
-        }
+        //Use correct repo
+        cityRepository = Main.USE_DATABASE ? new CityDBRepository(): new CityRepository();
 
         auditService = AuditService.getAuditService();
     }
