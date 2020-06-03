@@ -25,7 +25,7 @@ public class ClientService
     {
         if(connection != null)
         {
-            clientRepository = new ClientDBRepository(connection);
+            clientRepository = new ClientDBRepository();
         }
         else
         {

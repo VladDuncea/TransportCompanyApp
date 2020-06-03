@@ -1,5 +1,6 @@
 package vlad.duncea.transport.repository;
 
+import vlad.duncea.transport.model.Car;
 import vlad.duncea.transport.model.Driver;
 
 import java.sql.SQLException;
@@ -13,4 +14,5 @@ public interface DriverRepositoryInterface {
     Driver getDriverById(int id) throws SQLException;
     boolean giveCarToDriver(int driverId, String regNr) throws SQLException;
     ArrayList<Driver> getDrivers() throws SQLException;
+    ArrayList<Driver> getDriversByCar(String regNr) throws SQLException;
 }

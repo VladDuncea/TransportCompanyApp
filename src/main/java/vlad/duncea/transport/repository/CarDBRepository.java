@@ -2,6 +2,7 @@ package vlad.duncea.transport.repository;
 
 import vlad.duncea.transport.main.Main;
 import vlad.duncea.transport.model.Car;
+import vlad.duncea.transport.service.AuditService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +14,10 @@ import java.util.TreeSet;
 public class CarDBRepository implements CarRepositoryInterface
 {
 
-    public CarDBRepository() {
+    private AuditService auditService;
 
+    public CarDBRepository() {
+        auditService = AuditService.getAuditService();
     }
 
     public void addCar(Car c) throws SQLException {
@@ -40,9 +43,12 @@ public class CarDBRepository implements CarRepositoryInterface
 
         statement.executeUpdate();
         DbConnectionUtil.closeDBConnection(connection);
+
+        auditService.logData("CarDBRepository_addCar");
     }
 
     public Boolean removeCar(String regNr) throws SQLException {
+        auditService.logData("CarDBRepository_removeCar");
         Connection connection = DbConnectionUtil.getDBConnection();
         //Verify if car is attached to drivers
         String sqlGetDriversByCar = "SELECT COUNT(*) FROM drivers WHERE carRegNr = ?";
@@ -65,6 +71,7 @@ public class CarDBRepository implements CarRepositoryInterface
 
     @Override
     public Car getCarByRegNr(String regNr) throws SQLException {
+        auditService.logData("CarDBRepository_getCarByRegNr");
         Connection connection = DbConnectionUtil.getDBConnection();
         //Verify if car is attached to drivers
         String sql = "SELECT * FROM cars WHERE regNr = ?";
@@ -86,6 +93,7 @@ public class CarDBRepository implements CarRepositoryInterface
 
 
     public ArrayList<Car> getCars() throws SQLException {
+        auditService.logData("CarDBRepository_getCars");
         Connection connection = DbConnectionUtil.getDBConnection();
         ArrayList<Car> cars = new ArrayList<>();
 

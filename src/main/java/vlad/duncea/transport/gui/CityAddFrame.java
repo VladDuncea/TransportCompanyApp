@@ -18,21 +18,21 @@ public class CityAddFrame  extends JFrame{
 
         JLabel nameLabel = new JLabel("City name:" );
         JTextField name = new JTextField();
-        nameLabel.setBounds(10, 50, 200, 30);
+        nameLabel.setBounds(10, 40, 200, 30);
         name.setBounds(100, 50, 200, 30);
         add(nameLabel);
         add(name);
 
         JLabel latitudeLabel = new JLabel("Latitude:" );
         JTextField latitude = new JTextField();
-        latitudeLabel.setBounds(10, 100, 200, 30);
+        latitudeLabel.setBounds(10, 90, 200, 30);
         latitude.setBounds(100, 100, 200, 30);
         add(latitudeLabel);
         add(latitude);
 
         JLabel longitudeLabel = new JLabel("Longitude:" );
         JTextField longitude = new JTextField();
-        longitudeLabel.setBounds(10, 150, 200, 30);
+        longitudeLabel.setBounds(10, 140, 200, 30);
         longitude.setBounds(100, 150, 200, 30);
         add(longitudeLabel);
         add(longitude);
@@ -42,7 +42,7 @@ public class CityAddFrame  extends JFrame{
         button.addActionListener(event -> addDB(name, latitude,longitude));
         add(button);
 
-        setSize(350, 500);
+        setSize(350, 300);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -67,7 +67,5 @@ public class CityAddFrame  extends JFrame{
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "An error occurred, please try later!");
         }
-
-
     }
 }

@@ -11,15 +11,9 @@ import java.util.ArrayList;
 
 public class ClientDBRepository implements ClientRepositoryInterface {
 
-    Connection connection;
-
-    public ClientDBRepository(Connection connection)
-    {
-        this.connection = connection;
-    }
-
     @Override
     public void addClient(Client c) throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         String sqlAdd = "INSERT INTO clients VALUES (NULL,?, ?, ?)";
 
         PreparedStatement statement =  connection.prepareStatement(sqlAdd);
@@ -28,6 +22,7 @@ public class ClientDBRepository implements ClientRepositoryInterface {
         statement.setString(3, c.getPhoneNumber());
 
         statement.executeUpdate();
+        DbConnectionUtil.closeDBConnection(connection);
     }
 
     @Override
@@ -37,28 +32,34 @@ public class ClientDBRepository implements ClientRepositoryInterface {
 
     @Override
     public void removeClient(int id) throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         String sqlDelete = "DELETE FROM clients WHERE id = ?";
         PreparedStatement statement =  connection.prepareStatement(sqlDelete);
         statement.setInt(1, id);
         statement.executeUpdate();
+        DbConnectionUtil.closeDBConnection(connection);
     }
 
     @Override
     public Client getClientById(int id) throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         String sqlSelect = "SELECT * FROM clients WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(sqlSelect);
         ResultSet result = statement.executeQuery();
         if (result.next()) {
+            DbConnectionUtil.closeDBConnection(connection);
             return  new Client(result.getInt(1), result.getString(2), result.getString(3),result.getString(4));
         }
         else
         {
+            DbConnectionUtil.closeDBConnection(connection);
             return null;
         }
     }
 
     @Override
     public ArrayList<Client> getClients() throws SQLException {
+        Connection connection = DbConnectionUtil.getDBConnection();
         ArrayList<Client> clients = new ArrayList<>();
 
         String sqlSelect = "SELECT * FROM clients";
@@ -68,6 +69,7 @@ public class ClientDBRepository implements ClientRepositoryInterface {
             Client c = new Client(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),resultSet.getString(4));
             clients.add(c);
         }
+        DbConnectionUtil.closeDBConnection(connection);
         return clients;
     }
 }

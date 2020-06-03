@@ -28,7 +28,7 @@ public class DriverService
     {
         if(connection!=null)
         {
-            driverRepository = new DriverDBRepository(connection);
+            driverRepository = new DriverDBRepository();
         }
         else
         {

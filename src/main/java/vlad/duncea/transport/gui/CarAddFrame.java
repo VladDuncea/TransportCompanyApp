@@ -21,16 +21,16 @@ public class CarAddFrame extends JFrame {
 
         JLabel regNrLabel = new JLabel("Registration Nr: " );
         JTextField regNr = new JTextField();
-        regNrLabel.setBounds(0, 50, 200, 30);
+        regNrLabel.setBounds(10, 50, 200, 30);
         regNr.setBounds(100, 50, 200, 30);
 
         JLabel volumeLabel = new JLabel("Volume: " );
         JTextField volume = new JTextField();
-        volumeLabel.setBounds(0, 100, 200, 30);
+        volumeLabel.setBounds(10, 100, 200, 30);
         volume.setBounds(100, 100, 200, 30);
 
         JButton button = new JButton("Add Car");
-        button.setBounds(80, 150, 150, 30);
+        button.setBounds(100, 150, 150, 30);
         button.addActionListener(event -> addCarDB(regNr, volume));
 
         add(regNr);
@@ -39,7 +39,7 @@ public class CarAddFrame extends JFrame {
         add(volumeLabel);
         add(button);
 
-        setSize(350, 500);
+        setSize(350, 300);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {

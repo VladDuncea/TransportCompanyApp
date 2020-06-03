@@ -73,4 +73,16 @@ public class DriverRepository implements DriverRepositoryInterface
     public ArrayList<Driver> getDrivers() {
         return drivers;
     }
+
+    @Override
+    public ArrayList<Driver> getDriversByCar(String regNr) {
+        ArrayList<Driver> response = new ArrayList<>();
+        for(Driver d : drivers)
+            if(d.getCarRegNr()!=null && d.getCarRegNr().equals(regNr))
+            {
+                response.add(d);
+            }
+
+        return response;
+    }
 }

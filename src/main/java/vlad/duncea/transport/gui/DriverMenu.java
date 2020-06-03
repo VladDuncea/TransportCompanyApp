@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class CityMenu extends JFrame {
+public class DriverMenu extends JFrame{
 
-    public CityMenu(JFrame mainMenu) {
-        super("City Menu");
-        setMinimumSize(new Dimension(300, 300));
+    public DriverMenu(JFrame mainMenu) {
+        super("Driver Menu");
+        setMinimumSize(new Dimension(300, 350));
         getContentPane().setBackground(Color.darkGray);
         setLayout(null);
 
-        JLabel title = new JLabel("City Menu");
+        JLabel title = new JLabel("Driver Menu");
         title.setBounds(0,10,300,30);
         title.setHorizontalTextPosition(SwingConstants.CENTER);
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -21,23 +21,28 @@ public class CityMenu extends JFrame {
         add(title);
 
         JButton button;
-        button = new JButton("Add city");
-        button.setBounds(75, 60, 150, 30);
+        button = new JButton("Add driver");
+        button.setBounds(75, 40, 150, 30);
         button.addActionListener(event -> openAdd());
         add(button);
 
-        button = new JButton("View cities");
-        button.setBounds(75, 100, 150, 30);
+        button = new JButton("View drivers");
+        button.setBounds(75, 80, 150, 30);
         button.addActionListener(event -> openView());
         add(button);
 
-        button = new JButton("Remove city");
-        button.setBounds(75, 140, 150, 30);
-        button.addActionListener(event -> openView());
+        button = new JButton("Remove driver");
+        button.setBounds(75, 120, 150, 30);
+        button.addActionListener(event -> openRemove());
+        add(button);
+
+        button = new JButton("Give car to driver");
+        button.setBounds(75, 160, 150, 30);
+        button.addActionListener(event -> openUpdate());
         add(button);
 
         button = new JButton("Back");
-        button.setBounds(100, 200, 100, 30);
+        button.setBounds(100, 250, 100, 30);
         button.addActionListener(event -> goBack());
         add(button);
 
@@ -56,7 +61,7 @@ public class CityMenu extends JFrame {
     public void openAdd()
     {
         try {
-            new CityAddFrame(this);
+            new DriverAddFrame(this);
             setEnabled(false);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +70,27 @@ public class CityMenu extends JFrame {
     public void openView()
     {
         try {
-            new CityViewFrame(this);
+            new DriverViewFrame(this);
+            setEnabled(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openRemove()
+    {
+        try {
+            new DriverRemoveFrame(this);
+            setEnabled(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openUpdate()
+    {
+        try {
+            new DriverSetCarFrame(this);
             setEnabled(false);
         } catch (SQLException e) {
             e.printStackTrace();

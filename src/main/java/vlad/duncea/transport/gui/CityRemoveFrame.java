@@ -12,14 +12,14 @@ public class CityRemoveFrame extends JFrame {
     private CityRepositoryInterface repository = new CityDBRepository();
 
     public CityRemoveFrame(JFrame f) throws SQLException {
-        super("Remove car");
+        super("Remove city");
 
-        JLabel regNrLabel = new JLabel("Name: " );
+        JLabel nameLabel = new JLabel("Name: " );
         JTextField name = new JTextField();
-        regNrLabel.setBounds(20, 50, 200, 30);
+        nameLabel.setBounds(20, 50, 200, 30);
         name.setBounds(100, 50, 200, 30);
         add(name);
-        add(regNrLabel);
+        add(nameLabel);
 
         JButton button = new JButton("Remove City");
         button.setBounds(100, 150, 150, 30);
@@ -48,7 +48,5 @@ public class CityRemoveFrame extends JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "An error occurred, please try later!");
         }
-
-
     }
 }
